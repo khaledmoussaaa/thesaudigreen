@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ $offer->offer_number }}</title>
-
     @if (app()->getLocale() == 'en')
     <style>
         .invoice-box {
@@ -177,7 +175,6 @@
 
                                 <strong>{{__('translate.date')}}:</strong> {{ $date->translatedFormat('l, F,  Y')}}<br />
                                 <strong>{{__('translate.time')}}:</strong> {{ $date->translatedFormat('g:i A')}}<br />
-
                             </td>
                         </tr>
 
@@ -203,7 +200,6 @@
                                 <strong> {{__('translate.name')}}: </strong>{{ $user->name }}<br />
                                 @endif
                                 <strong> {{__('translate.address')}}: </strong>{{ $user->address }}<br />
-                                <strong> {{__('translate.requestID')}}: </strong>SS{{ $request_id }}<br />
                             </td>
                         </tr>
                     </table>
@@ -217,7 +213,8 @@
                 <td>{{__('translate.plateNumbers')}}</td>
                 <td>{{__('translate.affiliatedCenter')}}</td>
             </tr>
-            @foreach ($requests as $car)
+            @foreach ($requests as $request)
+            @foreach($request->request_details as $car)
             <tr class="item">
                 <td colspan="1">{{$car->factory }}</td>
                 <td colspan="1">{{$car->model_year }}</td>
@@ -225,6 +222,7 @@
                 <td colspan="1">{{$car->plate }}</td>
                 <td colspan="1">{{$car->place }}</td>
             </tr>
+            @endforeach
             @endforeach
         </table>
         <br>
@@ -238,16 +236,18 @@
                 <td>{{__('translate.quantity')}}</td>
                 <td>{{__('translate.unit')}}</td>
             </tr>
-            @foreach ($requests as $car)
-            @foreach($car->offer_details as $index => $detials)
-            <tr class="item">
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $detials->description }}</td>
-                <td>{{__('translate.remarks')}}</td>
-                <td>{{ $detials->quantity }}</td>
-                <td>{{__('translate.unit')}}</td>
-            </tr>
-            @endforeach
+            @foreach ($requests as $request)
+                @foreach($request->request_details as $index => $offer)
+                    @foreach($offer->offer_details as $details)
+                    <tr class="item">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $details->description }}</td>
+                        <td>{{__('translate.remarks')}}</td>
+                        <td>{{ $details->quantity }}</td>
+                        <td>{{__('translate.unit')}}</td>
+                    </tr>
+                    @endforeach
+                @endforeach
             @endforeach
         </table>
         <br>

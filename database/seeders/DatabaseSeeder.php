@@ -19,17 +19,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'Khaled',
             'email' => 'khaledmoussa202@gmail.com',
             'phone' => '01015571129',
-            'password' => Hash::make('24001091Km'),
+            'password' => '24001091Km',
             'usertype' => 'Admin',
             'type' => 'Admin',
         ]);
-        
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Customer',
-        //     'email' => 'customer@gmail.com',
-        //     'password' => Hash::make('24001091Km'),
-        //     'usertype' => 'Customer',
-        //     'type' => 'Customer',
-        // ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Ahmed Abdelnaser',
+            'email' => 'ag2834747@gmail.com',
+            'password' => '12345@admin',
+            'usertype' => 'Admin',
+            'type' => 'Admin',
+        ]);
     }
 }

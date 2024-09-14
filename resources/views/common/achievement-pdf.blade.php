@@ -174,8 +174,16 @@
                             </td>
 
                             <td class="headLeft" style="line-height: 23px;">
-                                {{__('translate.date')}}: {{now()->format('D-d/m/y')}}<br />
-                                {{__('translate.time')}}: {{now()->format('h:i A')}}<br />
+                                @php
+                                use Carbon\Carbon;
+                                $locale = App::getLocale(); // Get the current locale
+                                Carbon::setLocale($locale); // Set locale for Carbon
+
+                                $date = Carbon::now(); // Get the current date and time
+                                @endphp
+
+                                <strong>{{__('translate.date')}}:</strong> {{ $date->translatedFormat('l, F,  Y')}}<br />
+                                <strong>{{__('translate.time')}}:</strong> {{ $date->translatedFormat('g:i A')}}<br />
                             </td>
                         </tr>
 

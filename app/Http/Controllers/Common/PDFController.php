@@ -29,12 +29,7 @@ class PDFController extends Controller
         $user = Requests::with('user')->where('id', $request_id)->first()->user;
         $offer = OfferPrices::find($offer_id);
 
-
-        if ($user->employee->admin->type == 'AdminGovernmental') {
-            $pdf = PDF::loadView('common.governmental-pdf', compact('user', 'offer', 'requests', 'request_id'));
-        } else {
-            $pdf = PDF::loadView('common.pdf', compact('user', 'offer', 'requests', 'request_id'));
-        }
+        $pdf = PDF::loadView('common.pdf', compact('user', 'offer', 'requests', 'request_id'));
 
         if ($request->has('download')) {
             return $pdf->download('Name-' . $user->name . ' Offer Number-' . $offer->offer_number . '.pdf');
@@ -63,7 +58,7 @@ class PDFController extends Controller
 
         abort_unless($user = User::find($uid), 404);
 
-        $requests = Requests::has('request_details')->where('user_id', $uid)->whereIn('status', ['4', '5'])->has('total_price')->get();
+        $requests = Requests::has('request_details.offer_details')->where('user_id', $uid)->whereIn('status', ['4', '5'])->has('total_price')->get();
         $cars = 0;
 
         foreach ($requests as $request) {
@@ -71,7 +66,12 @@ class PDFController extends Controller
             $cars += $request->request_details()->count();
         }
 
-        $pdf = PDF::loadView('common.achievement-pdf',  compact('requests', 'user', 'totalPrice', 'cars'));
+
+        if ($user->type == in_array($user->type, ['AdminGovernmental', 'EmployeeGovernmental'])) {
+            $pdf = PDF::loadView('common.governmental-pdf', compact('user', 'requests', 'totalPrice', 'cars'));
+        } else {
+            $pdf = PDF::loadView('common.achievement-pdf',  compact('user', 'requests', 'totalPrice', 'cars'));
+        }
         return $pdf->stream('Name-' . $user->name);
     }
 }
