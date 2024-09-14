@@ -1,0 +1,215 @@
+/* ====================Home================== */
+.customer-navbar {
+    padding-bottom: 5px;
+}
+
+.messageOffer {
+    position: absolute;
+    right: 25px;
+}
+
+/* ====================Create================== */
+.makeRequest {
+    height: 100%;
+    width: 100%;
+
+    position: relative;
+    overflow: scroll;
+
+    border: 1px solid #e3e4e7;
+    border-radius: 10px;
+}
+
+.tableRequest {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.tableRequestHeaders {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    font-size: 15px;
+    color: rgb(96, 96, 96);
+    background-color: #e3e4e7;
+}
+
+
+.formRequest {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.tb-head {
+    width: calc(100% / 8);
+    margin: 1% 1.5%;
+
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.requestInputs {
+    width: calc(100% / 8);
+    margin: 1% 0.5%;
+}
+
+/* =================View Request=============== */
+.responseCustomer {
+    margin-bottom: 10px;
+}
+
+/* ====================Generate================== */
+.generate {
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(183, 213, 232, 0.508);
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.generate .header {
+    height: max-content;
+    text-indent: 0;
+}
+
+.generateForm {
+    width: 100%;
+    height: 200px;
+    gap: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.generate .labelInput {
+    width: 40%;
+}
+
+/* ================Create Request============= */
+.inputsGenerate {
+    width: 55%;
+    height: 55px;
+    text-indent: 10px;
+    border-radius: 10px;
+
+    background-color: #e5e5e5;
+}
+
+.createFooter {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+}
+
+/* ================View Request============= */
+.requests-container-customer,
+.offerPrice-container-customer {
+    height: calc(100% - 32px) !important;
+}
+
+/* ================View Request============= */
+.customer-viewRequest {
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+    position: relative;
+}
+
+.requestDetails,
+.request {
+    width: 100%;
+    height: calc(100% - 45px);
+    position: absolute;
+    overflow: scroll;
+}
+
+.viewRequestNav {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.request-info {
+    width: max-content;
+    height: 100%;
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.viewRequest .alert-danger {
+    left: 15px;
+    bottom: -15px;
+}
+
+
+/* ================Edit Request============= */
+.editRequest {
+    height: 100%;
+}
+
+/* ====================Chats================== */
+.chats-container {
+    display: unset;
+}
+
+.chats-conversation {
+    width: 100%;
+    height: 100%;
+}
+
+/* ================Invoice=================== */
+.response {
+    display: flex;
+    gap: 10px;
+}
+
+/* ================================f================================================================================================== */
+/* Mobile View */
+@media (max-width:575px) {
+
+    /* ==================Generate================= */
+    .generate .labelInput {
+        width: 80%;
+    }
+
+    /* ================Create Request============= */
+    .makeRequest {
+        height: calc(100% - 65px);
+    }
+
+    /* ==================Invoice================ */
+    .invoice .date {
+        padding: 5px;
+        font-size: 11px;
+        text-indent: 2px;
+    }
+}
