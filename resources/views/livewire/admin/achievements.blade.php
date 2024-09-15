@@ -25,7 +25,7 @@
                     <div class="request-information">
                         <div class="info">
                             <span>{{ __('translate.usertype') }}
-                                <strong class="mark @switch($user?->type) @case('Customer') scarlet @break @case('Company') goldenYellow @break @case('Governmental') || || @case('EmployeeGovernmental') electricPurple @break @endswitch">
+                                <strong class="mark @switch($user?->type) @case('Customer') scarlet @break @case('Company') goldenYellow @break @case('Governmental') || @case('AdminGovernmental') electricPurple @break @endswitch">
                                     {{ optional($user)->type }}
                                 </strong>
                             </span>

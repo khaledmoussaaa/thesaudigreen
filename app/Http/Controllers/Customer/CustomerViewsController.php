@@ -58,7 +58,9 @@ class CustomerViewsController extends Controller
         $rid = Crypt::decrypt($encryptId);
 
         abort_unless($find = Requests::withTrashed()->find($rid), 404);
-        $find->update(['seen' => 2]);
+        if($find->seen == 1){
+            $find->update(['seen' => 2]);
+        }
 
         $requestDetails = RequestDetails::where('request_id', $rid)->get();
 

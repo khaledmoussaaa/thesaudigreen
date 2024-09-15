@@ -13,12 +13,14 @@ class Counts extends Component
 {
     public string $status;
     public string $count;
+    public $user_id;
 
     // Mount Function
     public function mount($status, $count)
     {
         $this->status = $status;
         $this->count = $count;
+        $this->user_id = auth()->user()->governmental->governmental_id ?? auth()->user()->employee->governmental_id ?? Auth::id();
     }
 
     // Render Components
@@ -114,9 +116,9 @@ class Counts extends Component
     {
         $perviousCount = session('notificationCustomerCount', 0);
 
-        $requests = Requests::where('seen', 1)->where('status', '!=', 0)->where('user_id', Auth::id())->count();
+        $requests = Requests::where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id)->count();
         $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
-            $query->where('user_id', Auth::id());
+            $query->where('user_id', $this->user_id);
         })->count();
         $totalCount = $requests + $offerPrices;
         $currentCounts = min($totalCount, 99);

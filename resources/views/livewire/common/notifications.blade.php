@@ -18,8 +18,18 @@
                             <i class="bi bi-dot"> {{__('translate.newRequest') }}</i>
                         </strong>
                         @else
-                        <strong class="mark {{$notification['status'] == 1 ? 'mintCream' : 'scarlet'}}">
-                            <i class="bi bi-dot">{{$notification['status'] == 1 ? __('translate.offerAccept') : __('translate.offerDecline') }}</i>
+                        <strong class="mark {{$notification['status'] == in_array($notification['status'], [1, 3]) ? 'mintCream' : 'scarlet'}}">
+                            <i class="bi bi-dot">
+                                @if ($notification['status'] == 1)
+                                {{ __('translate.offerAccept') }}
+                                @elseif ($notification['status'] == 2)
+                                {{ __('translate.offerDecline') }}
+                                @elseif ($notification['status'] == 3)
+                                {{ __('translate.firstApproval') }}
+                                @elseif ($notification['status'] == 4)
+                                {{ __('translate.firstReject') }}
+                                @endif
+                            </i>
                         </strong>
                         @endif
                     </div>
@@ -38,7 +48,6 @@
             </div>
         </div>
     </div>
-
     @else
     <div class="formSubmit pointer" wire:click="navigateCustomer('{{ $notification['type'] }}', {{ $notification['rid'] }}, {{ $notification['ofd'] }})">
         <div class="content">
@@ -50,7 +59,7 @@
                     <div class="profileText">
                         <strong>The Saudi Green</strong>
                         @if($notification['type'] === 'Request')
-                        <strong class="mark bolder @switch($notification['status']) @case('1') gray @break @case('2') scarlet @break @case('3') mintCream @break @case('2') lightGray @break @case('4') lightBlue  @break @endswitch">
+                        <strong class="mark bolder @switch($notification['status']) @case('1') gray @break @case('2') scarlet @break @case('3') mintCream @break @case('4') lightGray @break @case('5') lightBlue  @break @endswitch">
                             <i class="bi bi-dot">
                                 @switch($notification['status'])
                                 @case('1') {{__('translate.requestInprocess')}} @break

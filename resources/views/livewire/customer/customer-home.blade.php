@@ -108,8 +108,8 @@
                             @if(!$request->total_price && $request->status == 0)
                             <x-tooltip-form :route="route('Edit-Request')" name="rid" class="button hoverButton success" :rid="encrypt($request->id)" :uid="null" icon="bi bi-pen bt-icon" text="{{ __('translate.edit') }}" />
                             @endif
-                            <x-tooltip-form :route="route('Offer-Price')" name="rid" class="button hoverButton" :rid="encrypt($request->id)" :uid="null" icon="bi bi-receipt-cutoff bt-icon" text="{{ __('translate.offerPrice') }}" />
                             @endcannot
+                            <x-tooltip-form :route="route('Offer-Price')" name="rid" class="button hoverButton" :rid="encrypt($request->id)" :uid="null" icon="bi bi-receipt-cutoff bt-icon" text="{{ __('translate.offerPrice') }}" />
                             <x-tooltip-form :route="route('Customer-View-Request')" name="rid" class="button hoverButton" :rid="encrypt($request->id)" :uid=null icon="bi bi-eye bt-icon" text="{{ __('translate.view') }}" />
                         </div>
                     </div>
@@ -119,7 +119,7 @@
         </div>
 
         @if($requests->isEmpty())
-        <div class="empty emptyText">
+        <div class="empty emptyText heyMessage">
             <span>{{ __('translate.heyMessage') }}</span>
         </div>
         @endif

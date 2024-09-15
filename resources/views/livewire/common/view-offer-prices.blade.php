@@ -172,6 +172,7 @@
                 Livewire.dispatch('setStatus', {
                     id: reason[0],
                     status: reason[1],
+                    type: reason[2] ?? null,
                     description: text,
                 });
             }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('remarks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained('requests');
+            $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
 
             $table->string('name');
             $table->string('remark');

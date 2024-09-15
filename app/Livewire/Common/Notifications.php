@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 class Notifications extends Component
 {
     public $type;
+    public $user_id;
 
     public function mount($type)
     {
         $this->type = $type;
+        $this->user_id = auth()->user()->governmental->governmental_id ?? auth()->user()->employee->governmental_id ?? Auth::id();
     }
 
     public function render()
@@ -30,7 +32,7 @@ class Notifications extends Component
             case 'Customer':
                 return $this->notificationsCustomer();
             default:
-                return collect(); // Return an empty collection for unknown types
+                return collect();
         }
     }
 
@@ -58,7 +60,7 @@ class Notifications extends Component
     // Request Admin Notfications
     public function requestsAdmin()
     {
-        return Requests::with('user')->where('seen', 0)->where('status', 0)->latest()->get(); //Visible all requests that has seen = 0 & status = 0
+        return Requests::with('user')->where('seen', 0)->where('status', 0)->latest()->get(); // Visible all requests that has seen = 0 & status = 0
     }
 
     // Offer Prices Notifications
@@ -75,7 +77,7 @@ class Notifications extends Component
         return redirect()->route('View-OfferPrice', ['rid' => encrypt($rid), 'ofd' => encrypt($ofd)]);
     }
 
-    // ======================Customer====================== //
+    // ====================== Customer ====================== //
     public function notificationsCustomer()
     {
         $requests = $this->requestsCustomer();
@@ -98,13 +100,13 @@ class Notifications extends Component
 
     public function requestsCustomer()
     {
-        return Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->where('user_id', Auth::id())->get();
+        return Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id)->get();
     }
 
     public function offerPricesCustomer()
     {
         return OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
-            $query->where('user_id', Auth::id());
+            $query->where('user_id', $this->user_id);
         })->get();
     }
 

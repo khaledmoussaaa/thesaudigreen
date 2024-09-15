@@ -74,6 +74,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(GovernmentalEmployee::class);
     }
+    // Requests Relationship
+    public function governmental()
+    {
+        return $this->hasOne(GovernmentalEmployee::class, 'governmental_id');
+    }
 
     // Observe
     protected static function booted(): void

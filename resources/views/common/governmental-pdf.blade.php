@@ -62,10 +62,10 @@
         .invoice-box {
             max-width: 800px;
             margin: auto;
-            padding: 30px;
+            padding: 10px;
             border: 1px solid rgb(214, 214, 214);
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 24px;
             color: #555;
         }
@@ -236,18 +236,24 @@
                 <td>{{__('translate.quantity')}}</td>
                 <td>{{__('translate.unit')}}</td>
             </tr>
+            @php
+            $rowIndex = 1; // Initialize the counter
+            @endphp
             @foreach ($requests as $request)
-                @foreach($request->request_details as $index => $offer)
-                    @foreach($offer->offer_details as $details)
-                    <tr class="item">
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $details->description }}</td>
-                        <td>{{__('translate.remarks')}}</td>
-                        <td>{{ $details->quantity }}</td>
-                        <td>{{__('translate.unit')}}</td>
-                    </tr>
-                    @endforeach
-                @endforeach
+            @foreach($request->request_details as $index => $offer)
+            @foreach($offer->offer_details as $details)
+            <tr class="item">
+                <td>{{ $rowIndex }}</td>
+                <td>{{ $details->description }}</td>
+                <td>{{__('translate.remarks')}}</td>
+                <td>{{ $details->quantity }}</td>
+                <td></td>
+            </tr>
+            @php
+            $rowIndex++; // Increment the counter
+            @endphp
+            @endforeach
+            @endforeach
             @endforeach
         </table>
         <br>

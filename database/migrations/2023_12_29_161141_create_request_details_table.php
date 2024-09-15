@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('request_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained('requests');
+            $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
 
             $table->string('factory');
             $table->string('model_year');

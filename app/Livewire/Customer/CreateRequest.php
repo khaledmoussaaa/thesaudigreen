@@ -19,7 +19,7 @@ class CreateRequest extends Component
     // Mount
     public function mount($rnumber, $rid)
     {
-        $this->user = Auth()->user()->id;
+        $this->user = auth()->user()->employee->governmental_id ?? Auth()->user()->id;
 
         // For Create Request
         $this->rowsNumber = $rnumber;
@@ -142,10 +142,8 @@ class CreateRequest extends Component
             //code...
 
             if (!$this->rid) {
-                $formData = new Requests();
-                $formData->user_id = $this->user;
-                $formData->save();
-                $this->request_id = $formData->id;
+                $request = Requests::create(['user_id' => $this->user]);
+                $this->request_id = $request->id;
             }
 
             foreach ($this->rows as $row) {

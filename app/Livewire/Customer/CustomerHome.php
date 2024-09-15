@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Gate;
 
 class CustomerHome extends Component
 {
-    public $user;
+    public $user_id;
     public $search = '';
     public $id = '';
 
     // Mount the component with the given view request.
     public function mount()
     {
-        $this->user = Auth()->user()->id;
+        $this->user_id = auth()->user()->governmental->governmental_id ?? auth()->user()->employee->governmental_id ?? auth()->id();
     }
 
     // Render the livewire component.
@@ -30,17 +30,7 @@ class CustomerHome extends Component
     // Fetch requests based on selected option and search criteria.
     private function fetchRequests()
     {
-        if (Gate::allows('adminGovernmental')) {
-            $requests = Requests::with('user', 'request_details')->whereHas('user', function ($query) {
-                $query->whereHas('employee', function ($query) {
-                    $query->where('governmental_id', auth()->id());
-                });
-            });
-        } else {
-            $requests = Requests::with('user', 'request_details')->whereHas('user', function ($query) {
-                $query->where('id', $this->user);
-            });
-        }
+        $requests = Requests::with('user', 'request_details')->where('user_id', $this->user_id);
 
         if ($this->search) {
             $rid = preg_replace('/ss(\d+)/i', '$1', $this->search); // Remove "ss" and capture digits

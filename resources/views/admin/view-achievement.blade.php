@@ -9,30 +9,32 @@ View Achievement
     <div class="view-achievement">
 
         <!-- Header -->
-        <div class="achievement-header">
+        <div class="achievement-header flex-r-center">
             <div class="profileRequest">
                 <img src="https://ui-avatars.com/api/?uppercase=true&size=60&font-size=0.35&rounded=true&background=random&color=radnom&name={{ $user->name }}" alt="">
                 <strong class="name">{{$user->name}}<br> {{$user->email}}</strong>
             </div>
 
-            <form method="GET" action="{{ route('Achivement-PDF') }}" class="requestButtons">
-                @csrf
-                <input type="hidden" name="uid" value="{{ encrypt($user->id) }}">
-                <div class="tooltip">
-                    <button type="submit" class="req-button">
-                        <i class="bi bi-printer"></i>
-                        <span>{{ __('translate.print') }}</span>
-                        <div class="tooltiptext">{{ __('translate.print') }}</div>
-                    </button>
-                </div>
-                <div class="tooltip">
-                    <button type="submit" class="req-button" name="download" value="download">
-                        <i class="bi bi-cloud-arrow-down"></i>
-                        <span>{{ __('translate.download') }}</span>
-                        <div class="tooltiptext">{{ __('translate.download') }}</div>
-                    </button>
-                </div>
-            </form>
+            <div class="">
+                <form method="GET" action="{{ route('Achivement-PDF') }}" class="requestButtons">
+                    @csrf
+                    <input type="hidden" name="uid" value="{{ encrypt($user->id) }}">
+                    <div class="tooltip">
+                        <button type="submit" class="req-button">
+                            <i class="bi bi-printer"></i>
+                            <span>{{ __('translate.print') }}</span>
+                            <div class="tooltiptext">{{ __('translate.print') }}</div>
+                        </button>
+                    </div>
+                    <div class="tooltip">
+                        <button type="submit" class="req-button" name="download" value="download">
+                            <i class="bi bi-cloud-arrow-down"></i>
+                            <span>{{ __('translate.download') }}</span>
+                            <div class="tooltiptext">{{ __('translate.download') }}</div>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <!-- Details -->

@@ -1280,6 +1280,7 @@ input[type="file"] {
     position: relative;
     top: 0;
 }
+
 /* =================================================================================================================================== */
 /* Components Design */
 /* ===================Toggle================== */
@@ -1723,7 +1724,7 @@ input[type="file"] {
 }
 
 .emptyText {
-    padding: 20px;
+    padding: 15px;
     font-weight: bold;
     border-radius: 25px;
     color: #11215c;
@@ -2318,11 +2319,14 @@ td {
 }
 
 @media (max-width: 1726px) and (min-width: 1180px) {
-    .req-button span {
+
+    .view-offerinfo .req-button span,
+    .viewRequest .req-button span {
         display: none;
     }
 
-    .req-button {
+    .view-offerinfo .req-button,
+    .view-offerinfo .viewRequest {
         width: 30px;
         height: 30px;
         padding: 6px;
@@ -2330,13 +2334,13 @@ td {
         border-radius: 100%;
     }
 
-    .tooltip {
+    .view-offerinfo .tooltip {
         position: relative;
         display: inline-block;
         cursor: pointer;
     }
 
-    .tooltip:hover .tooltiptext {
+    .view-offerinfo .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
     }
@@ -2467,29 +2471,43 @@ td {
         width: 100% !important;
     }
 
-    /* Tooltip */
+    /* Hide spans in .req-button unless they are within .achievement-header */
+    .achievement-header .req-button span {
+        display: inline;
+        /* or default state */
+    }
+
     .req-button span {
         display: none;
     }
 
-    .req-button {
-        width: 30px;
-        height: 30px;
-        padding: 6px;
-        align-items: unset;
-        border-radius: 100%;
+    
+
+    /* .achievement-header .req-button can have different styles if needed */
+    .achievement-header .req-button {
+        width: auto;
+        height: auto;
     }
 
+    /* Tooltip styles */
     .tooltip {
         position: relative;
         display: inline-block;
         cursor: pointer;
     }
 
+    .tooltiptext {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s, visibility 0.3s;
+        /* Other styling for the tooltip text */
+    }
+
     .tooltip:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
     }
+
 
     /* Remakrs */
     .remarkBox {
@@ -2588,8 +2606,12 @@ td {
         width: 90%;
     }
 
+    .heyMessage {
+        width: 100%;
+    }
+
     .empty {
-        font-size: 14px;
+        font-size: 13px;
     }
 
     /* Notifications */
@@ -2606,7 +2628,7 @@ td {
     /* ================Titles============= */
     .pageTitle {
         left: 8px;
-        font-size: 14px;
+        font-size: 12px;
     }
 
     /* RTL */
@@ -2647,6 +2669,14 @@ td {
         visibility: hidden;
         opacity: 0;
     }
+
+    /* Flex Row Center */
+    .flex-r-center {
+        display: flex;
+        gap: 5px;
+        align-items: start;
+        flex-direction: column;
+    }
 }
 
 /* ================================================================================================================================== */
@@ -2657,15 +2687,15 @@ td {
     /* View Requests */
     /* .req-button span {
         display: none;
-    }
+    } */
 
-    .req-button {
+    /* .req-button {
         width: 30px;
         height: 30px;
         padding: 6px;
         align-items: unset;
         border-radius: 100%;
-    } */
+    }
 
     /* Tooltip */
     .viewRequest .tooltip {
@@ -2678,6 +2708,8 @@ td {
         visibility: visible;
         opacity: 1;
     }
+
+    */
 
     /* RadioNavbar */
     .radio-inputs {

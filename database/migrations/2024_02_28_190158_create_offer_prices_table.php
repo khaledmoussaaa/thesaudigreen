@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('offer_prices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained('requests');
+            $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
 
             $table->string('offer_number');
             $table->string('price_before_sale', 10, 2);

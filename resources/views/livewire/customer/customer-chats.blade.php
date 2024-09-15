@@ -54,7 +54,7 @@
                 @endforeach
                 @endforeach
                 @empty
-                <div class="empty emptyText">
+                <div class="empty emptyText heyMessage">
                     <span>{{ __('translate.conversationEmpty') }}</span>
                 </div>
                 @endforelse
