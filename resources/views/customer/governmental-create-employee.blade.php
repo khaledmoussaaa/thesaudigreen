@@ -36,7 +36,7 @@
 
                 <div class="labelInput">
                     <label for="phone" class="label">{{ __('translate.phone') }} <span class="required">*</span></label>
-                    <input type="text" name="phone" value="{{ old('phone') }}" placeholder="966XXXXXXXXXX" id="phone" class="input inputs" required>
+                    <input type="text" name="phone" value="{{ old('phone') }}" placeholder="966XXXXXXXXXX" id="phone" class="input inputs">
                     <x-input-error class="alert-danger" :messages="$errors->get('phone')" />
                 </div>
 
