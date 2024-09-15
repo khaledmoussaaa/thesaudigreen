@@ -123,23 +123,22 @@ return
         'totalPrice' => 'السعر الإجمالي',
         'sar' => 'ر.س',
         'address' => 'عنوان',
-
         'carType' => 'نوع السيارة',
-        'carModel' => 'المودبل',
-        'plateLatters' => 'الاحرف',
-        'plateNumbers' => 'الأرقم',
+        'carModel' => 'الموديل',
+        'plateLatters' => 'الحروف',
+        'plateNumbers' => 'الأرقام',
         'affiliatedCenter' => 'المركز التابع له',
 
         'sequence' => 'التسلسل',
-        'services_maintenance' => 'الخدمات والصبانات',
-        'unit' => 'Unit',
-        'vehicleReceiptCenter' => 'ببانات مستلم المركبة من المركز
-التوفبع',
+        'services_maintenance' => 'الخدمات والصيانة',
+        'unit' => 'الوحدة',
+        'vehicleReceiptCenter' => 'بيانات مستلم المركبة من المركز التابع',
         'signature' => 'التوقيع',
-        'pdfTitle' => 'تم الانتها من انجاز اعمال الصبانه وهى كالتالى :',
-        'phoneNumber' => 'رقم الحوال',
-        'technicalMembers' => 'الأعضاء الفنيين',
+        'pdfTitle' => 'تم الانتهاء من إنجاز أعمال الصيانة وهي كالتالي:',
+        'phoneNumber' => 'رقم الهاتف',
+        'technicalMembers' => 'الأعضاء الفنين',
         'accreditationApproval' => 'اعتماد وموافقة مدير الورشة',
+
 
         // ==========================Title========================= //
         // Titles Lables
