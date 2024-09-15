@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class CreateUserController extends Controller
 {
@@ -30,7 +31,8 @@ class CreateUserController extends Controller
     public function store(UserRequest $request)
     {
         try {
-            User::create($request->validated());
+            $user = User::create($request->validated());
+            event(new Registered($user));
             return redirect()->route('Users.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
             return redirect()->route('Users.index')->with('error', __('translate.userCreatedError'));
