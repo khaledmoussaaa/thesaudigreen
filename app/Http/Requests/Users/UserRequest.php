@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $userId,
-            'phone' => 'required|string|regex:/^[0-9]\d{9,12}$/',
+            'phone' => 'nullable|string|regex:/^[0-9]\d{9,12}$/',
             'usertype' => 'required|string|not_in:empty|in:Admin,Requests,Remarks,Customer,Governmental,AdminGovernmental,Company',
             'tax_number' => 'nullable|string',
             'address' => 'nullable|string',
