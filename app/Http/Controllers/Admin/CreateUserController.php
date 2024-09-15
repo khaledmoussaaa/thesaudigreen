@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
+use App\Notifications\NewAccountNotification;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class CreateUserController extends Controller
 {
@@ -31,8 +34,8 @@ class CreateUserController extends Controller
     public function store(UserRequest $request)
     {
         try {
-            $user = User::create($request->validated());
-            event(new Registered($user));
+            $user = User::create(array_merge($request->validated(), ['password' => Str::random(16)]));
+            $this->sendPasswordResetEmail($user);
             return redirect()->route('Users.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
             return redirect()->route('Users.index')->with('error', __('translate.userCreatedError'));
@@ -62,5 +65,16 @@ class CreateUserController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('Users.index')->with('error', __('translate.userUpdatedError'));
         }
+    }
+
+     /**
+     * Send the password reset email.
+     */
+    protected function sendPasswordResetEmail(User $user)
+    {
+        // Generate a password reset token
+        $token = Password::createToken($user);
+        // Send the reset password email
+        $user->notify(new NewAccountNotification($token));
     }
 }

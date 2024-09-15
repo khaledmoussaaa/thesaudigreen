@@ -29,8 +29,6 @@ class UserRequest extends FormRequest
             'usertype' => 'required|string|not_in:empty|in:Admin,Requests,Remarks,Customer,Governmental,AdminGovernmental,Company',
             'tax_number' => 'nullable|string',
             'address' => 'nullable|string',
-            'password' => $userId ? 'nullable' : 'required|confirmed|min:8',
-            'password_confirmation' => $userId ? 'nullable' : 'required|min:8|same:password',
         ];
     }
 }

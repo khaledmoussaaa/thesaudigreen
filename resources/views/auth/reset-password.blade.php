@@ -11,7 +11,6 @@
                 </div>
 
                 <div class="contact-form wow fadeInUp login open" data-wow-delay="1.0s" id="signIn">
-
                     <form id="contact-form" method="POST" action="{{ route('password.store') }}">
                         @csrf
 
@@ -26,8 +25,11 @@
                         <!-- Password Reset Token -->
                         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
+                        <!-- Email Hidden Input -->
+                        <input type="hidden" name="email" value="{{ $request->route('email', old('email')) }}">
+
                         <div class="col-md-12 col-sm-6">
-                            <input name="email" type="email" class="form-control" placeholder="Your Email" :value="old('email', $request->email)" required>
+                            <input name="email" type="email" class="form-control" placeholder="Your Email" value="{{ old('email', $request->route('email')) }}" required>
                         </div>
 
                         <div class="col-md-12 col-sm-6">
@@ -35,7 +37,7 @@
                         </div>
 
                         <div class="col-md-12 col-sm-6">
-                            <input name="password_confirmation" type="password" class="form-control" placeholder="Password" required>
+                            <input name="password_confirmation" type="password" class="form-control" placeholder="Confirm Password" required>
                         </div>
 
                         <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 login-buttons">
@@ -47,7 +49,4 @@
             </div>
         </div>
     </section>
-
-
-
-    @endsection
+@endsection

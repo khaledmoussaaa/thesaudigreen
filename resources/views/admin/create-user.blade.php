@@ -68,18 +68,6 @@
                     <x-input-error class="alert-danger" :messages="$errors->get('address')" />
                 </div>
 
-                <div class="labelInput">
-                    <label for="password" class="label">{{ __('translate.password') }} <span class="required">*</span></label>
-                    <input type="password" name="password" value="{{ old('password') }}" placeholder="Your password" id="password" class="input inputs" required>
-                    <x-input-error class="alert-danger" :messages="$errors->get('password')" />
-                </div>
-
-                <div class="labelInput">
-                    <label for="password" class="label">{{ __('translate.password_confirmation') }} <span class="required">*</span></label>
-                    <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm password" id="confirmPassword" class="input inputs" required>
-                    <x-input-error class="alert-danger" :messages="$errors->get('password_confirmation')" />
-                </div>
-
                 <div class="footer">
                     <button type="submit" class="submit hoverButton"> {{ __('translate.create') }}</button>
                 </div>
