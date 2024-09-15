@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inquires;
-use App\Models\RequestDetails;
 use Illuminate\Http\Request;
 
 use App\Models\Requests;
