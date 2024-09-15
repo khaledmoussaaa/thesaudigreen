@@ -9,6 +9,9 @@ use Illuminate\Auth\Events\Registered;
 
 class CreateUserController extends Controller
 {
+    // Variables
+    public static $creatingUser = false;
+
     /**
      * Display a listing of the resource.
      */
@@ -30,6 +33,7 @@ class CreateUserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        self::$creatingUser = true;
         try {
             $user = User::create($request->validated());
             event(new Registered($user));

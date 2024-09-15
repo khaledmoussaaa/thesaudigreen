@@ -4,6 +4,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Admin\CreateUserController;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Http\Controllers\Customer\GovernmentalEmployeeController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,16 +86,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         // Saving
         static::saving(function ($model) {
-
             if (Auth::check() && (request()->routeIs('logout') || request()->Is('livewire/update'))) {
                 return; // Skip modifying attributes during logout
             }
 
-
             if (GovernmentalEmployeeController::$creatingEmployee) {
                 $model->usertype = 'Customer';
                 $model->type = 'EmployeeGovernmental';
-            } else {
+            }
+
+            if (CreateUserController::$creatingUser) {
                 $model->chats_id = in_array($model->usertype, ['Admin', 'Requests']) ? 1 : 0;
                 $model->type = $model->usertype;
                 $model->usertype = in_array($model->usertype, ['Requests', 'Remarks']) ? 'Employee' : (in_array($model->usertype, ['Customer', 'Company', 'Governmental', 'AdminGovernmental']) ? 'Customer' : 'Admin');

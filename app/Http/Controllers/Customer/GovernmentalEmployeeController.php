@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GovernmentalEmployee\GovernmentalEmployeeRequest;
 use App\Models\GovernmentalEmployee;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class GovernmentalEmployeeController extends Controller
 {
@@ -38,6 +39,7 @@ class GovernmentalEmployeeController extends Controller
             self::$creatingEmployee = true;
             $user = User::create($request->validated());
             $employee = GovernmentalEmployee::create(['user_id' => $user->id, 'governmental_id' => auth()->id()]);
+            event(new Registered($user));
             return redirect()->route('Employees.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
             dd($error->getMessage());
