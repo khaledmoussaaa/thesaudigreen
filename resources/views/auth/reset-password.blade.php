@@ -28,9 +28,9 @@
                         <!-- Email Hidden Input -->
                         <input type="hidden" name="email" value="{{ $request->route('email', old('email')) }}">
 
-                        <div class="col-md-12 col-sm-6">
+                        <!-- <div class="col-md-12 col-sm-6">
                             <input name="email" type="email" class="form-control" placeholder="Your Email" value="{{ old('email', $request->route('email')) }}" required>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 col-sm-6">
                             <input name="password" type="password" class="form-control" placeholder="Password" required>
