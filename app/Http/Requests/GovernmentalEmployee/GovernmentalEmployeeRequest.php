@@ -25,7 +25,7 @@ class GovernmentalEmployeeRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $userId,
-            'phone' => 'nullable|string|regex:/^[0-9]\d{9,12}$/',
+            'phone' => 'required|string|regex:/^[0-9]\d{9,12}$/',
             'address' => 'nullable|string',
             'usertype' => 'nullable',
             'type' => 'nullable',
