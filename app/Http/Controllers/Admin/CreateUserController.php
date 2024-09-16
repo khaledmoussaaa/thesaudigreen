@@ -39,6 +39,7 @@ class CreateUserController extends Controller
             event(new Registered($user));
             return redirect()->route('Users.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
+            dd($error->getMessage());
             return redirect()->route('Users.index')->with('error', __('translate.userCreatedError'));
         }
     }
