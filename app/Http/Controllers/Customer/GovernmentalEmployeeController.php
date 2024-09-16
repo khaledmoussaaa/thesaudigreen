@@ -39,7 +39,7 @@ class GovernmentalEmployeeController extends Controller
             self::$creatingEmployee = true;
             $user = User::create($request->validated());
             $employee = GovernmentalEmployee::create(['user_id' => $user->id, 'governmental_id' => auth()->id()]);
-            event(new Registered($user));
+            // event(new Registered($user));
             return redirect()->route('Employees.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
             dd($error->getMessage());

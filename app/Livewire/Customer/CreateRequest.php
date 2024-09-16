@@ -19,7 +19,7 @@ class CreateRequest extends Component
     // Mount
     public function mount($rnumber, $rid)
     {
-        $this->user = auth()->user()->employee->governmental_id ?? Auth()->user()->id;
+        $this->user = auth()->id();
 
         // For Create Request
         $this->rowsNumber = $rnumber;

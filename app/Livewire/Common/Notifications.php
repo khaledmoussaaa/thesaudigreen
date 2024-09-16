@@ -6,6 +6,7 @@ use App\Models\Requests;
 use App\Models\OfferPrices;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class Notifications extends Component
 {
@@ -15,7 +16,7 @@ class Notifications extends Component
     public function mount($type)
     {
         $this->type = $type;
-        $this->user_id = auth()->user()->governmental->governmental_id ?? auth()->user()->employee->governmental_id ?? Auth::id();
+        $this->user_id = Auth::id();
     }
 
     public function render()
@@ -100,14 +101,32 @@ class Notifications extends Component
 
     public function requestsCustomer()
     {
-        return Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id)->get();
+        if (Gate::allows('adminGovernmental')) {
+            $requests = Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->whereHas('user', function ($query) {
+                $query->whereHas('employee', function ($query) {
+                    $query->where('governmental_id', auth()->id());
+                });
+            });
+        } else {
+            $requests = Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id);
+        }
+        return $requests->latest()->get();
     }
 
     public function offerPricesCustomer()
     {
-        return OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
-            $query->where('user_id', $this->user_id);
-        })->get();
+        if (Gate::allows('adminGovernmental')) {
+            $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests.user', function ($query) {
+                $query->whereHas('employee', function ($query) {
+                    $query->where('governmental_id', auth()->id());
+                });
+            });
+        } else {
+            $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
+                $query->where('user_id', $this->user_id);
+            });
+        }
+        return $offerPrices->latest()->get();
     }
 
     public function navigateCustomer(string $type, int $rid, int $ofd)
