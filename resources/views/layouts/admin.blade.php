@@ -69,7 +69,7 @@
             <div class="blur"></div>
 
             <!-- Logo -->
-            <img src="{{ asset('Images/Logos/Logo.svg') }}" class="logoMenu hiddenMobile">
+            <img src="{{ asset('Images/Logos/Logo.svg') }}" class="logoMenu hiddenMobile sideActive toggleActive">
             <i class="bi bi-chevron-right swipe sideActive hiddenMobile" onclick="sidebar_active()"></i>
 
             <!-- Sidebar Menu -->
