@@ -18,9 +18,13 @@ function backHome() {
 
 const isLoginEnabled = localStorage.getItem("login");
 
-if (isLoginEnabled === null || isLoginEnabled === "disabled") {
+if (isLoginEnabled === "disabled") {
     backHome();
-} else {
+}
+else if (isLoginEnabled === null) {
+    openLogin();
+}
+else {
     openLogin();
 }
 // ==============================================================//
