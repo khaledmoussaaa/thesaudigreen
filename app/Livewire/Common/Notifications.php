@@ -106,7 +106,7 @@ class Notifications extends Component
                 $query->whereHas('employee', function ($query) {
                     $query->where('governmental_id', auth()->id());
                 });
-            });
+            })->orderBy('updated_at', 'desc');
         } else {
             $requests = Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id);
         }
@@ -120,11 +120,11 @@ class Notifications extends Component
                 $query->whereHas('employee', function ($query) {
                     $query->where('governmental_id', auth()->id());
                 });
-            });
+            })->orderBy('updated_at', 'desc');
         } else {
             $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
                 $query->where('user_id', $this->user_id);
-            });
+            })->orderBy('updated_at', 'desc');
         }
         return $offerPrices->latest()->get();
     }

@@ -9,6 +9,7 @@
         </div>
         @endif
     </div>
+
     <div class="userTableNavbar">
         <div class="search-navbar">
             <div class="group">
@@ -35,7 +36,6 @@
                 @endforeach
             </ul>
         </div>
-
     </div>
 
     @if($users->isNotEmpty())
@@ -75,7 +75,6 @@
                                 <i class="bi bi-pen"></i>
                             </button>
                         </form>
-
                         <x-action-button class="actions" icon="bi {{ $user->deleted_at ? 'bi-arrow-counterclockwise' : 'bi bi-ban' }}" click="$dispatch('alert', [ '{{ encrypt($user->id) }}', '{{ $user->name }}', 'blockOrActive', '{{ $user->deleted_at ? 'block' : 'activate' }}' ] )" />
                         <x-action-button class="scarlet actions" icon="bi bi-trash" click="$dispatch('alert', [ '{{ encrypt($user->id) }}', '{{ $user->name }}', 'delete'] )" />
                     </div>

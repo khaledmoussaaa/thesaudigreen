@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewAccountCreate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
 
 class CreateUserController extends Controller
 {
@@ -34,12 +36,21 @@ class CreateUserController extends Controller
     public function store(UserRequest $request)
     {
         self::$creatingUser = true;
+        $requestValidated = $request->validated();
+        if (!isset($requestValidated['usingPassword'])) {
+            $requestValidated['password'] = Str::random(32);
+        }
         try {
-            $user = User::create($request->validated());
-            event(new Registered($user));
+            $user = User::create($requestValidated);
+            if (!isset($requestValidated['usingPassword'])) {
+                event(new NewAccountCreate($user));
+            } else {
+                event(new Registered($user));
+            }
             return redirect()->route('Users.index')->with('success', __('translate.userCreatedSuccess'));
         } catch (\Throwable $error) {
-            return redirect()->route('Users.index')->with('error', __('translate.userCreatedError'));
+            dd($error->getMessage());
+            return redirect()->route('Users.index')->with('error', $error->getMessage());
         }
     }
 
@@ -58,6 +69,7 @@ class CreateUserController extends Controller
      */
     public function update(UserRequest $request, string $id)
     {
+        self::$creatingUser = true;
         try {
             $uid = decrypt($id);
             abort_unless($user = User::withTrashed()->find($uid), 404);

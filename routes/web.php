@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\NewAccountController;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,13 +21,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/', [Controller::class, 'index'])->name('home');
 
     // ======================= Admin Routes ======================== //
-    Route::group(['middleware' => 'Role:Admin' , 'controller' => 'Admin\AdminViewsController'], function () {
+    Route::group(['middleware' => 'Role:Admin', 'controller' => 'Admin\AdminViewsController'], function () {
         // Dashboard
         Route::get('/Dashboard', 'dashboard')->name('Dashboard');
         // Users
         Route::resource('Users', 'Admin\CreateUserController');
         // Inquiries
         Route::get('/Inquiries', 'inquiries')->name('Inquiries');
+        // Mails
+        Route::resource('Mails', 'Admin\MailController');
     });
 
     // ======================= Employees Routes ======================= //
@@ -92,5 +96,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         return redirect()->back();
     })->name('languageConverter');
 });
+
+
 
 require __DIR__ . '/auth.php';

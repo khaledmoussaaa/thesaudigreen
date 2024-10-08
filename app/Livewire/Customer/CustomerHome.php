@@ -31,11 +31,14 @@ class CustomerHome extends Component
     private function fetchRequests()
     {
         if (Gate::allows('adminGovernmental')) {
-            $requests = Requests::with('user', 'request_details')->whereHas('user', function ($query) {
-                $query->whereHas('employee', function ($query) {
-                    $query->where('governmental_id', auth()->id());
+            $requests = Requests::with('user', 'request_details')
+                ->whereHas('user', function ($query) {
+                    $query->whereHas('employee', function ($query) {
+                        $query->where('governmental_id', auth()->id());
+                    });
                 });
-            });
+            // Order by updated_at for adminGovernmental
+            $requests->orderBy('updated_at', 'desc');
         } else {
             $requests = Requests::with('user', 'request_details')->whereHas('user', function ($query) {
                 $query->where('id', $this->user);
@@ -59,6 +62,7 @@ class CustomerHome extends Component
             });
         }
 
+        // Apply the latest ordering and withTrashed for both cases
         return $requests->latest()->withTrashed()->get();
     }
 }

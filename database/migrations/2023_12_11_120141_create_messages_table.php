@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('recipient_id')->constrained('users');
+            $table->foreignId('recipient_id');
 
             $table->longText('message');
             $table->string('photo_path')->nullable();

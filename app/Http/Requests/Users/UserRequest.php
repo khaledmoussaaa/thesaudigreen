@@ -22,15 +22,17 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         $userId = $this->route('User') ? decrypt($this->route('User')) : null;
+        $usingPassword = $this->input('usingPassword') ?? null;
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $userId,
-            'phone' => 'required|string|regex:/^[0-9]\d{9,12}$/',
+            'phone' => 'nullable',
             'usertype' => 'required|string|not_in:empty|in:Admin,Requests,Remarks,Customer,Governmental,AdminGovernmental,Company',
             'tax_number' => 'nullable|string',
             'address' => 'nullable|string',
-            'password' => $userId ? 'nullable' : 'required|confirmed|min:8',
-            'password_confirmation' => $userId ? 'nullable' : 'required|min:8|same:password',
+            'usingPassword' => 'sometimes|string',
+            'password' => $usingPassword ? 'required|min:8' : 'nullable',
+            'password_confirmation' => $usingPassword ? 'required|min:8|same:password' : 'nullable',
         ];
     }
 }

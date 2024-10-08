@@ -7,6 +7,7 @@ use App\Models\OfferPrices;
 use App\Models\Requests;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class Counts extends Component
@@ -70,9 +71,9 @@ class Counts extends Component
             ->count();
         $currentCounts = min($currentCounts, 99);
 
-        if ($currentCounts !== $perviousCount) {
-            $this->dispatch('play');
-        }
+        // if ($currentCounts !== $perviousCount) {
+        //     $this->dispatch('play');
+        // }
 
         session(['adminCounts' => $currentCounts]);
         return $currentCounts;
@@ -87,9 +88,9 @@ class Counts extends Component
             ->count();
 
         $currentCounts = min($currentCounts, 99);
-        if ($currentCounts !== $perviousCount) {
-            $this->dispatch('play');
-        }
+        // if ($currentCounts !== $perviousCount) {
+        //     $this->dispatch('play');
+        // }
 
         session(['adminCounts' => $currentCounts]);
         return $currentCounts;
@@ -116,10 +117,25 @@ class Counts extends Component
     {
         $perviousCount = session('notificationCustomerCount', 0);
 
-        $requests = Requests::where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id)->count();
-        $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
-            $query->where('user_id', $this->user_id);
-        })->count();
+        if (Gate::allows('adminGovernmental')) {
+            $requests = Requests::with('user')->where('seen', 1)->where('status', '!=', 0)->whereHas('user', function ($query) {
+                $query->whereHas('employee', function ($query) {
+                    $query->where('governmental_id', auth()->id());
+                });
+            })->count();
+
+            $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests.user', function ($query) {
+                $query->whereHas('employee', function ($query) {
+                    $query->where('governmental_id', auth()->id());
+                });
+            })->count();
+        } else {
+            $requests = Requests::where('seen', 1)->where('status', '!=', 0)->where('user_id', $this->user_id)->count();
+            $offerPrices = OfferPrices::with('requests.user')->where('seen', 0)->where('status', 0)->whereHas('requests', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->count();
+        }
+
         $totalCount = $requests + $offerPrices;
         $currentCounts = min($totalCount, 99);
         if ($currentCounts !== $perviousCount) {

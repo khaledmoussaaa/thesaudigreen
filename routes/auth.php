@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminViewsController;
-
+use App\Http\Controllers\Admin\NewAccountController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -11,7 +11,6 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
-use App\Http\Controllers\Auth\OTPController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +28,10 @@ Route::middleware('guest')->group(function () {
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+    
+    // New Account Password
+    Route::get('set-account-password', [NewAccountController::class, 'setAccountPassword']);
+    Route::post('save-account-password', [NewAccountController::class, 'saveNewPassword'])->name('password-save');
 
     // Inquiries
     Route::post('/Create-Inquiries', [AdminViewsController::class, 'createInquiries'])->name('Create-Inquiries');
@@ -48,3 +51,5 @@ Route::middleware('auth')->group(function () {
     // Logout
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
+
+

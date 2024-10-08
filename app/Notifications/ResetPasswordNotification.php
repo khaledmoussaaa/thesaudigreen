@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewAccountNotification extends Notification
+class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
@@ -34,23 +34,18 @@ class NewAccountNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $url = env('APP_URL') . '/reset-password/' . $this->token . '&&email=' . $notifiable->email;
-
+        $url = env('APP_URL') . '/set-account-password' . '?token=' . $this->token . '&&email=' . $notifiable->email;
         return (new MailMessage)
             ->greeting('Welcome ' . $notifiable->name . ',')
             ->line('Your account is now officially part of The Saudi Green Company, and you can start using our platform to manage and promote your services.')
-            ->line('If you have any questions or need further assistance, please do not hesitate to contact us:')
-            ->line('Thank you for choosing **The Saudi Green**. We are excited to support your company on this journey.')
-            ->line('---')
-            ->greeting('مرحباً ' . $notifiable->name . ',')
-            ->line('تمت إضافة حسابك الآن رسمياً إلى شركةالخضراء"، ويمكنك البدء في استخدام منصتنا لإدارة وتعزيز خدماتك.')
-            ->line(':إذا كانت لديك أي أسئلة أو تحتاج إلى مساعدة إضافية، لا تتردد في الاتصال بنا')
-            ->line('شكراً لاختيارك **شركةالخضراء**. نحن متحمسون لدعم شركتك في هذه الرحلة.')
-            ->line('---')
             ->action('Login here', $url)
-            ->line('**Email:** [contact@thesaudigreen.com](mailto:contact@thesaudigreen.com)')
-            ->line('**Phone:** +0570203360');
+            ->line('If you have any questions or need further assistance, please do not hesitate to contact us:')
+            ->line('**Email:** contact@thesaudigreen.com')
+            ->line('**Phone:** 01015571129')
+            ->line('Thank you for choosing **The Saudi Green**. We are excited to support your company on this journey.')
+            ->line('---');
     }
+
     /**
      * Get the array representation of the notification.
      *

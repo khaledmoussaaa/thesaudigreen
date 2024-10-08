@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,8 +14,8 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(1)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'Khaled',
-            'email' => 'khaledmoussa909@gmail.com',
+            'name' => 'Khaled 1',
+            'email' => 'khaledmoussa202@gmail.com',
             'phone' => '01015571129',
             'password' => '24001091Km',
             'usertype' => 'Admin',
@@ -25,11 +23,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'Ahmed Abdelnaser',
-            'email' => 'ag2834747@gmail.com',
-            'password' => '12345@admin',
+            'name' => 'Khaled 2',
+            'email' => 'khaledmoussa909@gmail.com',
+            'phone' => '01015571129',
+            'password' => '24001091Km',
             'usertype' => 'Admin',
             'type' => 'Admin',
         ]);
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Ahmed Abdelnaser',
+        //     'email' => 'ag2834747@gmail.com',
+        //     'password' => '12345@admin',
+        //     'usertype' => 'Admin',
+        //     'type' => 'Admin',
+        // ]);
     }
 }
