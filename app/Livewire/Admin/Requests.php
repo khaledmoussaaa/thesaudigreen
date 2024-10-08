@@ -36,7 +36,7 @@ class Requests extends Component
     // Fetch requests based on selected option and search criteria.
     private function fetchRequests()
     {
-        $query = Request::with('request_details')->latest();
+        $query = Request::has('user')->with('request_details')->latest();
 
         if ($this->selectedOption !== 'all') {
             $query->where('status', $this->selectedOption);
@@ -61,7 +61,7 @@ class Requests extends Component
             $this->found = false;
         }
 
-        return $query->paginate(10);
+        return $query->paginate(5);
     }
 
     // Get the count of requests with the given status.
