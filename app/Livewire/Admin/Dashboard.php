@@ -60,7 +60,7 @@ class Dashboard extends Component
             '2' => $this->dashboardCounts(2),
             '3' => $this->dashboardCounts(3),
             '4' => $this->dashboardCounts(4),
-            '5' => $this->dashboardCounts(4),
+            '5' => $this->dashboardCounts(5),
             'users' => $this->userCounts(null),
         ];
 
