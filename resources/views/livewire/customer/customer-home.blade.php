@@ -119,9 +119,15 @@
         </div>
 
         @if($requests->isEmpty())
+        @can('adminGovernmental')
+        <div class="empty emptyText heyMessage">
+            <span>{{ __('translate.heyMessageAdmin') }}</span>
+        </div>
+        @elsecan
         <div class="empty emptyText heyMessage">
             <span>{{ __('translate.heyMessage') }}</span>
         </div>
+        @endcan
         @endif
     </div>
 </div>

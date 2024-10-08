@@ -57,7 +57,7 @@
                         </div>
                         <div class="profile-information">
                             <span class="name ">{{ $user->name }}</span>
-                            <span class="lighter">{{ __('translate.' . strtolower($user->usertype)) }}</span>
+                            <span class="lighter">{{ __('translate.' . strtolower($user->type)) }}</span>
                         </div>
                     </div>
                     @endforeach

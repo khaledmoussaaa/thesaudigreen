@@ -72,9 +72,11 @@ class Dashboard extends Component
         ];
 
         $this->title = [
-            '0' => __('translate.admin'),
+            '0' => __('translate.admins'),
             '1' => __('translate.employees'),
-            '2' => __('translate.customer'),
+            '2' => __('translate.clients'),
+            '3' => __('translate.adminGovernmental'),
+            '4' => __('translate.employeeGovernmental'),
         ];
     }
 

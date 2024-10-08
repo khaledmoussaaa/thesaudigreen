@@ -177,6 +177,7 @@ return
         'conversationEmpty' => 'Hey there! 👋 Currently, there are no new messages. Feel free to start a conversation or ask anything you\'d like. I\'m here to chat and help out!',
         'conversationSelect' => 'No conversation selected yet',
         'heyMessage' => 'Welcome to The Saudi Green! 👋 You don\'t have any requests yet. You can make a request by clicking on the "Create" button and specifying the number of cars you want data inserted for. Once you make a request, it will appear here. Thank you! 🌟',
+        'heyMessageAdmin' => 'Welcome to The Saudi Green! 👋 You don\'t have any requests yet. Can create users and once any use make request it appear here, can create user by clicking on the "Create User On Sidebar" 🌟',
         'confirmDelete' => 'Are you sure you want to delete this post?',
         'errorOccured' => 'Fail, An error occured please try again..',
 
@@ -195,6 +196,7 @@ return
 
         // Users Type
         'admin' => 'Admin',
+        'admins' => 'Admins',
         'users' => 'Users',
         'employees' => 'Employees',
         'customer' => 'Customer',
