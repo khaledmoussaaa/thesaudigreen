@@ -58,7 +58,7 @@ class Requests extends Component
             $this->found = false;
         }
 
-        return $query->get();
+        return $query->paginate(10);
     }
 
     // Get the count of requests with the given status.

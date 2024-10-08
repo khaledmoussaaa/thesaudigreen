@@ -144,6 +144,7 @@
         </div>
         @endif
     </div>
+    {{$requests->links()}}
 </div>
 
 <!-- Scripts -->
