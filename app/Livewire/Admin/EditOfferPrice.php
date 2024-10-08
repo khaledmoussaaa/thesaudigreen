@@ -2,11 +2,9 @@
 
 namespace App\Livewire\admin;
 
-
 use App\Models\OfferDetails;
 use App\Models\OfferPrices;
 use App\Models\RequestDetails;
-
 use Livewire\Component;
 
 class EditOfferPrice extends Component
@@ -14,10 +12,8 @@ class EditOfferPrice extends Component
     // Declaring Variables
     public $rid;
     public $ofd;
-
     public $rows = [];
     public $cars = [];
-
     public $totalPricesBeforeSale;
     public $totalPricesAfterSale;
     public $totalQuantity;
@@ -34,14 +30,10 @@ class EditOfferPrice extends Component
     public function render()
     {
         $this->calculateTotals();
-
-        return view(
-            'livewire.admin.edit-offer-price',
-            [
-                'total_prices' => $this->totalPricesAfterSale,
-                'total_quantity' => $this->totalQuantity,
-            ]
-        );
+        return view('livewire.admin.edit-offer-price', [
+            'total_prices' => $this->totalPricesAfterSale,
+            'total_quantity' => $this->totalQuantity,
+        ]);
     }
 
     // Request Details With OfferDetails
@@ -54,7 +46,7 @@ class EditOfferPrice extends Component
         }])->get();
     }
 
-    // Intialize Inputs
+    // Initialize Inputs
     public function initializeInputs()
     {
         $this->cars = $this->offerDetails();
@@ -67,6 +59,7 @@ class EditOfferPrice extends Component
                     'price' => $details->price,
                     'sale' => $details->sale,
                     'quantity' => $details->quantity,
+                    'car_id' => $car->id
                 ];
             }
         }
@@ -91,14 +84,57 @@ class EditOfferPrice extends Component
             }
         }
     }
+
+    // Add New Row
+    public function addRow($carId)
+    {
+        // Add a new row for the given car ID
+        $this->rows[$carId][] = [
+            'description' => '',
+            'price' => 0,
+            'sale' => 0,
+            'quantity' => 1,
+            'car_id' => $carId
+            // You can add other necessary default values
+        ];
+    }
+
     // Delete Offer_Details
     public function delete($id, $carIndex, $rowIndex)
     {
-        $offer_details = offerDetails::find($id);
-        if ($offer_details && isset($this->rows[$carIndex][$rowIndex])) {
-            unset($this->rows[$carIndex][$rowIndex]);
-            $this->rows[$carIndex] = array_values($this->rows[$carIndex]);
-            $offer_details->delete();
+        // Check if the row has an ID and delete from the database
+        if (isset($this->rows[$carIndex][$rowIndex]['id'])) {
+            $offer_details = OfferDetails::find($id);
+            if ($offer_details) {
+                // Remove the row from the local array
+                unset($this->rows[$carIndex][$rowIndex]);
+                $this->rows[$carIndex] = array_values($this->rows[$carIndex]);
+
+                // Delete the offer details from the database
+                $offer_details->delete();
+            }
+        } else {
+            // If there's no ID, simply unset the row
+            if (isset($this->rows[$carIndex][$rowIndex])) {
+                unset($this->rows[$carIndex][$rowIndex]);
+                $this->rows[$carIndex] = array_values($this->rows[$carIndex]);
+            }
+        }
+
+        // Check if all cars have no rows left
+        $hasRows = false;
+        foreach ($this->rows as $carRows) {
+            if (!empty($carRows)) {
+                $hasRows = true;
+                break; // Exit loop if any car has rows
+            }
+        }
+
+        // If no rows left for any car, delete the OfferPrices
+        if (!$hasRows) {
+            OfferPrices::findOrFail($this->ofd)->forceDelete();
+            // Optionally, redirect or provide feedback
+            return redirect()->route('Offer-Prices', ['rid' => encrypt($this->rid)])->with('success', __('translate.theOfferPriceDeleted'));
         }
     }
 
@@ -106,7 +142,6 @@ class EditOfferPrice extends Component
     private function validateRows()
     {
         $rules = [];
-
         foreach ($this->rows as $carIndex => $carRows) {
             foreach ($carRows as $rowIndex => $row) {
                 $rules["rows.{$carIndex}.{$rowIndex}.description"] = 'required|string|max:255';
@@ -121,6 +156,11 @@ class EditOfferPrice extends Component
     // Update
     public function update()
     {
+        $offerNumber = 'OFP-' . uniqid();
+        while (OfferPrices::where('offer_number', $offerNumber)->exists()) {
+            $offerNumber = 'OFP-' . uniqid();
+        }
+
         try {
             $this->validateRows();
             $offer_prices = OfferPrices::find($this->ofd);
@@ -138,21 +178,34 @@ class EditOfferPrice extends Component
                 $offer_prices->update($offerPrice);
             }
 
-            foreach ($this->rows as  $carRows) {
+            foreach ($this->rows as $carRows) {
                 foreach ($carRows as $row) {
-                    $offer_details = OfferDetails::find($row['id']);
-                    if ($offer_details) {
-                        $offer_details->description = $row['description'];
-                        $offer_details->price = $row['price'];
-                        $offer_details->sale = $row['sale'];
-                        $offer_details->quantity = $row['quantity'];
-                        $offer_details->save();
+                    if (isset($row['id'])) {
+                        $offer_details = OfferDetails::find($row['id']);
+                        if ($offer_details) {
+                            $offer_details->description = $row['description'];
+                            $offer_details->price = $row['price'];
+                            $offer_details->sale = $row['sale'];
+                            $offer_details->quantity = $row['quantity'];
+                            $offer_details->save();
+                        }
+                    } else {
+                        OfferDetails::create([
+                            'description' => $row['description'],
+                            'price' => $row['price'],
+                            'sale' => $row['sale'],
+                            'quantity' => $row['quantity'],
+                            'offer_id' => $this->ofd,
+                            'offer_number' => $offer_prices->offer_number ?? $offerNumber,
+                            'car_id' => $row['car_id']
+                        ]);
                     }
                 }
             }
 
             return redirect()->route('Offer-Prices', ['rid' => encrypt($this->rid)])->with('success', __('translate.offerUpdatedSuccess'));
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->route('Offer-Prices', ['rid' => encrypt($this->rid)])->with('error', __('translate.offerUpdatedError'));
         }
     }

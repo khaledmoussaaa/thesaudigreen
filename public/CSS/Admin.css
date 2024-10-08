@@ -556,28 +556,7 @@
     justify-content: end;
 }
 
-.pagination-navigation {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
-.disapled {
-    color: black;
-}
-
-.pagination-numbers {
-    display: flex;
-}
-
-.pagination-numbers li {
-    margin: 0 7px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border: 1px solid rgb(222, 222, 222);
-}
 
 /* ===============View Achievement Page================ */
 .view-achievement {

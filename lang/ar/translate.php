@@ -267,6 +267,7 @@ return
         'deletedIt' => 'نعم، احذفها!',
         'deleted' => 'تم الحذف!',
         'theRequestDeleted' => 'تم حذف الطلب بنجاح.',
+        'theOfferPriceDeleted' => 'تم حذف الطلب عرض السعر.',
         'file' => 'ملف',
         "completed_confirmation" => "هل أنت متأكد من أنك ترغب في إتمام الطلب؟",
         'action' => 'Action',

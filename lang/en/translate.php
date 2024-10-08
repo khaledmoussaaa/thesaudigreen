@@ -291,6 +291,7 @@ return
         'blockedd' => 'Blocked!',
 
         'theRequestDeleted' => 'The request has been deleted.',
+        'theOfferPriceDeleted' => 'The offer price has been deleted.',
 
         'userDeleted' => 'The user has been deleted.',
         'userBlocked' => 'The user has been blocked.',

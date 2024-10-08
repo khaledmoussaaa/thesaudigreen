@@ -133,6 +133,8 @@
                 </div>
             </div>
             @endforeach
+            {{$requests->links('pagination-links')}}
+
         </div>
 
         <!-- If Reqquests Is Empty -->
@@ -144,7 +146,6 @@
         </div>
         @endif
     </div>
-    {{$requests->links()}}
 </div>
 
 <!-- Scripts -->

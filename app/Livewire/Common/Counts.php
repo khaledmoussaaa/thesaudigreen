@@ -105,9 +105,9 @@ class Counts extends Component
         $offerPrices = OfferPrices::where('seen', 2)->where('status', '!=', 0)->count();
         $totalCount = $requests + $offerPrices;
         $currentCounts = min($totalCount, 99);
-        if ($currentCounts !== $perviousCount) {
-            $this->dispatch('play');
-        }
+        // if ($currentCounts !== $perviousCount) {
+        //     $this->dispatch('play');
+        // }
         session(['notificationAdminCount' => $currentCounts]);
         return $currentCounts;
     }
@@ -138,9 +138,9 @@ class Counts extends Component
 
         $totalCount = $requests + $offerPrices;
         $currentCounts = min($totalCount, 99);
-        if ($currentCounts !== $perviousCount) {
-            $this->dispatch('play');
-        }
+        // if ($currentCounts !== $perviousCount) {
+        //     $this->dispatch('play');
+        // }
         session(['notificationCustomerCount' => $currentCounts]);
 
         return $currentCounts;

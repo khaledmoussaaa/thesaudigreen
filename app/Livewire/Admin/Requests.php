@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\Requests as Request;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\On;
+use Livewire\WithPagination;
 
 class Requests extends Component
 {
+    use WithPagination;
+
     // Variables
     public $selectedOption = 'all';
     public $search = '';
