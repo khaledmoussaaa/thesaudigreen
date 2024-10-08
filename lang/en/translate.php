@@ -344,4 +344,5 @@ return
         'conversationsEmpty' => 'Conversations Empty',
         'usersEmpty' => 'Users Empty',
         'electronicAppNumber' => 'Electronic Application Number',
+        'usingPassword' => 'Using Manual Passowrd',
     ];

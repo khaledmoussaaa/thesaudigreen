@@ -83,7 +83,7 @@
                 <!-- Checkbox to toggle password visibility -->
                 <div class="request-remark labelInput">
                     <input type="checkbox" name="usingPassword" id="showPassword" @checked(old('usingPassword')) class="check" onclick="togglePasswordVisibility()">
-                    <label for="showPassword">Using Manual Passowrd</label>
+                    <label for="showPassword">{{ __('translate.usingPassword') }}</label>
                 </div>
 
                 <div class="footer">

@@ -329,4 +329,5 @@ return
         'archivesEmpty' => 'لاتوجد ارشيفات ',
         'conversationsEmpty' => 'لا توجد محادثات',
         'usersEmpty' => 'لا يوجد مستخدمون',
+        'usingPassword' => 'استخدام كلمة المرور يدوية',
     ];

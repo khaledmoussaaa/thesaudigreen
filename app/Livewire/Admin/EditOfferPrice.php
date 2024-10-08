@@ -205,7 +205,6 @@ class EditOfferPrice extends Component
 
             return redirect()->route('Offer-Prices', ['rid' => encrypt($this->rid)])->with('success', __('translate.offerUpdatedSuccess'));
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return redirect()->route('Offer-Prices', ['rid' => encrypt($this->rid)])->with('error', __('translate.offerUpdatedError'));
         }
     }
